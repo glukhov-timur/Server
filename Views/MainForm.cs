@@ -1,4 +1,5 @@
-﻿using Server.Models;
+﻿using Server.DTO;
+using Server.Models;
 using Server.Other;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,26 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using static System.Net.WebRequestMethods;
 
 namespace Server.Views
 {
     public partial class MainForm : Form
     {
-        public XmlModel XmlModel { get; set; }
+        private const string LOCALHOST = "127.0.0.1";
+
+        private TcpListener _tcpListener;
+        public XmlModel XmlModel { get; private set; }
+        public IpPortDTO IpPortDTO { get; private set; }
 
         public MainForm()
         {
@@ -28,10 +38,11 @@ namespace Server.Views
 
         private void OpenFileBtn_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+            openXmlFileDialog.Filter = "XML Files (*.xml)|*.xml";
+            openXmlFileDialog.DefaultExt = "xml";
+            if (openXmlFileDialog.ShowDialog() == DialogResult.Cancel)
                 return;
-            
-            string filePath = openFileDialog1.FileName;
+            string filePath = openXmlFileDialog.FileName;
             try
             {
                 XmlModel = ParseXml(filePath);
@@ -42,7 +53,7 @@ namespace Server.Views
                 MessageBox.Show("Ошибка парсинга xml");
                 return;
             }
-            
+
         }
 
         private void ShowCurrentXml()
@@ -62,7 +73,7 @@ namespace Server.Views
             text.AppendLine(XmlModel.Id);
 
             XmlTB.Text = text.ToString();
-            RichTextBoxExtensions.AppendText(this.XmlTB, "text: " + XmlModel.Text, XmlModel.Color);           
+            RichTextBoxExtensions.AppendText(this.XmlTB, "text: " + XmlModel.Text, XmlModel.Color);
         }
 
         private XmlModel ParseXml(string filePath)
@@ -96,12 +107,108 @@ namespace Server.Views
             using (MemoryStream ms = new MemoryStream(imageBytes))
             {
                 return Image.FromStream(ms, true);
-            }         
+            }
         }
 
         private void ConnectBtn_Click(object sender, EventArgs e)
         {
+            InitListenerAsync();
+        }
 
+        private void LocalhostCB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (LocalhostCB.Checked)
+                IpTB.Text = LOCALHOST;
+            else
+                IpTB.Text = String.Empty;
+        }
+
+        private async Task InitListenerAsync()
+        {
+            if (!ValidateIpAndPort())
+                return;
+
+            _tcpListener = new TcpListener(IpPortDTO.Ip, IpPortDTO.Port);
+            try
+            {
+                _tcpListener.Start();    // запускаем сервер
+                Console.WriteLine("Сервер запущен. Ожидание подключений... ");
+
+                while (true)
+                {
+                    // получаем подключение в виде TcpClient
+                    var tcpClient = await _tcpListener.AcceptTcpClientAsync();
+
+                    // создаем новую задачу для обслуживания нового клиента
+                    Task.Run(async () => await ProcessClientAsync(tcpClient));
+                }
+            }
+            finally
+            {
+                _tcpListener.Stop();
+            }
+        }
+
+        async Task ProcessClientAsync(TcpClient tcpClient)
+        {
+            //TODO:
+            //ClientIpLabel.Text = tcpClient.Client.RemoteEndPoint.AddressFamily.
+            var stream = tcpClient.GetStream();
+            var modelByteArray = Serialize(XmlModel);
+            await stream.WriteAsync(modelByteArray, 0, modelByteArray.Length);
+            tcpClient.Close();
+        }
+
+        public byte[] Serialize(object anySerializableObject)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                (new BinaryFormatter()).Serialize(memoryStream, anySerializableObject);
+                return memoryStream.ToArray();
+            }
+        }
+
+        private bool ValidateIpAndPort()
+        {
+            IpPortDTO = new IpPortDTO();
+            try
+            {
+                IpPortDTO.Ip = IPAddress.Parse(IpTB.Text);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ошибка ip адреса");
+                return false;
+            }
+
+            bool success = int.TryParse(PortTB.Text, out int number);
+            if (success)
+            {
+                IpPortDTO.Port = number;
+            }
+            else
+            {
+                MessageBox.Show("Ошибка порта");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void IpTB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void PortTB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

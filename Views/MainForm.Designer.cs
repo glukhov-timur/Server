@@ -29,26 +29,29 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.PortTB = new System.Windows.Forms.TextBox();
+            this.IpTB = new System.Windows.Forms.TextBox();
+            this.LocalhostCB = new System.Windows.Forms.CheckBox();
             this.DisconnectBtn = new System.Windows.Forms.Button();
             this.ConnectBtn = new System.Windows.Forms.Button();
-            this.maskedTextBox2 = new System.Windows.Forms.MaskedTextBox();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.ClientPortLabel = new System.Windows.Forms.Label();
+            this.ClientIpLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.openXmlFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.XmlTB = new System.Windows.Forms.RichTextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.OpenFileBtn = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.XmlTB = new System.Windows.Forms.RichTextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.StatusLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -58,132 +61,158 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.StatusLabel);
+            this.panel1.Controls.Add(this.label11);
+            this.panel1.Controls.Add(this.PortTB);
+            this.panel1.Controls.Add(this.IpTB);
+            this.panel1.Controls.Add(this.LocalhostCB);
             this.panel1.Controls.Add(this.DisconnectBtn);
             this.panel1.Controls.Add(this.ConnectBtn);
-            this.panel1.Controls.Add(this.maskedTextBox2);
-            this.panel1.Controls.Add(this.maskedTextBox1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Location = new System.Drawing.Point(9, 10);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(227, 154);
+            this.panel1.Size = new System.Drawing.Size(170, 167);
             this.panel1.TabIndex = 0;
+            // 
+            // PortTB
+            // 
+            this.PortTB.Location = new System.Drawing.Point(51, 46);
+            this.PortTB.MaxLength = 5;
+            this.PortTB.Name = "PortTB";
+            this.PortTB.Size = new System.Drawing.Size(100, 20);
+            this.PortTB.TabIndex = 10;
+            this.PortTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PortTB_KeyPress);
+            // 
+            // IpTB
+            // 
+            this.IpTB.Location = new System.Drawing.Point(51, 23);
+            this.IpTB.Name = "IpTB";
+            this.IpTB.Size = new System.Drawing.Size(100, 20);
+            this.IpTB.TabIndex = 9;
+            this.IpTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IpTB_KeyPress);
+            // 
+            // LocalhostCB
+            // 
+            this.LocalhostCB.AutoSize = true;
+            this.LocalhostCB.Location = new System.Drawing.Point(52, 73);
+            this.LocalhostCB.Name = "LocalhostCB";
+            this.LocalhostCB.Size = new System.Drawing.Size(68, 17);
+            this.LocalhostCB.TabIndex = 9;
+            this.LocalhostCB.Text = "localhost";
+            this.LocalhostCB.UseVisualStyleBackColor = true;
+            this.LocalhostCB.CheckedChanged += new System.EventHandler(this.LocalhostCB_CheckedChanged);
             // 
             // DisconnectBtn
             // 
             this.DisconnectBtn.Enabled = false;
-            this.DisconnectBtn.Location = new System.Drawing.Point(112, 99);
+            this.DisconnectBtn.Location = new System.Drawing.Point(84, 95);
+            this.DisconnectBtn.Margin = new System.Windows.Forms.Padding(2);
             this.DisconnectBtn.Name = "DisconnectBtn";
-            this.DisconnectBtn.Size = new System.Drawing.Size(89, 34);
+            this.DisconnectBtn.Size = new System.Drawing.Size(67, 28);
             this.DisconnectBtn.TabIndex = 4;
             this.DisconnectBtn.Text = "disconnect";
             this.DisconnectBtn.UseVisualStyleBackColor = true;
             // 
             // ConnectBtn
             // 
-            this.ConnectBtn.Location = new System.Drawing.Point(22, 99);
+            this.ConnectBtn.Location = new System.Drawing.Point(17, 95);
+            this.ConnectBtn.Margin = new System.Windows.Forms.Padding(2);
             this.ConnectBtn.Name = "ConnectBtn";
-            this.ConnectBtn.Size = new System.Drawing.Size(75, 34);
+            this.ConnectBtn.Size = new System.Drawing.Size(56, 28);
             this.ConnectBtn.TabIndex = 1;
             this.ConnectBtn.Text = "connect";
             this.ConnectBtn.UseVisualStyleBackColor = true;
             this.ConnectBtn.Click += new System.EventHandler(this.ConnectBtn_Click);
             // 
-            // maskedTextBox2
-            // 
-            this.maskedTextBox2.Location = new System.Drawing.Point(70, 57);
-            this.maskedTextBox2.Mask = "00000";
-            this.maskedTextBox2.Name = "maskedTextBox2";
-            this.maskedTextBox2.Size = new System.Drawing.Size(131, 22);
-            this.maskedTextBox2.TabIndex = 3;
-            // 
-            // maskedTextBox1
-            // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(70, 29);
-            this.maskedTextBox1.Mask = "000.000.000.000";
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(131, 22);
-            this.maskedTextBox1.TabIndex = 1;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(19, 60);
+            this.label2.Location = new System.Drawing.Point(14, 49);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 16);
+            this.label2.Size = new System.Drawing.Size(37, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "PORT";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 32);
+            this.label1.Location = new System.Drawing.Point(14, 26);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(19, 16);
+            this.label1.Size = new System.Drawing.Size(17, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "IP";
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
-            this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.label6);
+            this.panel2.Controls.Add(this.ClientPortLabel);
+            this.panel2.Controls.Add(this.ClientIpLabel);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label3);
-            this.panel2.Location = new System.Drawing.Point(12, 172);
+            this.panel2.Location = new System.Drawing.Point(9, 181);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(227, 114);
+            this.panel2.Size = new System.Drawing.Size(170, 93);
             this.panel2.TabIndex = 1;
             // 
-            // label7
+            // ClientPortLabel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(83, 69);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(16, 16);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "...";
+            this.ClientPortLabel.AutoSize = true;
+            this.ClientPortLabel.Location = new System.Drawing.Point(62, 56);
+            this.ClientPortLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ClientPortLabel.Name = "ClientPortLabel";
+            this.ClientPortLabel.Size = new System.Drawing.Size(16, 13);
+            this.ClientPortLabel.TabIndex = 6;
+            this.ClientPortLabel.Text = "...";
             // 
-            // label6
+            // ClientIpLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(83, 41);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(16, 16);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "...";
+            this.ClientIpLabel.AutoSize = true;
+            this.ClientIpLabel.Location = new System.Drawing.Point(62, 33);
+            this.ClientIpLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ClientIpLabel.Name = "ClientIpLabel";
+            this.ClientIpLabel.Size = new System.Drawing.Size(16, 13);
+            this.ClientIpLabel.TabIndex = 5;
+            this.ClientIpLabel.Text = "...";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(18, 69);
+            this.label4.Location = new System.Drawing.Point(14, 56);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 16);
+            this.label4.Size = new System.Drawing.Size(37, 13);
             this.label4.TabIndex = 4;
             this.label4.Text = "PORT";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 41);
+            this.label5.Location = new System.Drawing.Point(14, 33);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(19, 16);
+            this.label5.Size = new System.Drawing.Size(17, 13);
             this.label5.TabIndex = 3;
             this.label5.Text = "IP";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(88, 9);
+            this.label3.Location = new System.Drawing.Point(66, 7);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 16);
+            this.label3.Size = new System.Drawing.Size(33, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Client";
             // 
-            // openFileDialog1
+            // openXmlFileDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openXmlFileDialog.FileName = "openXmlFileDialog";
             // 
             // panel3
             // 
@@ -194,16 +223,57 @@
             this.panel3.Controls.Add(this.pictureBox);
             this.panel3.Controls.Add(this.OpenFileBtn);
             this.panel3.Controls.Add(this.label8);
-            this.panel3.Location = new System.Drawing.Point(245, 12);
+            this.panel3.Location = new System.Drawing.Point(184, 10);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(409, 451);
+            this.panel3.Size = new System.Drawing.Size(307, 366);
             this.panel3.TabIndex = 2;
+            // 
+            // XmlTB
+            // 
+            this.XmlTB.Location = new System.Drawing.Point(4, 171);
+            this.XmlTB.Margin = new System.Windows.Forms.Padding(2);
+            this.XmlTB.Name = "XmlTB";
+            this.XmlTB.ReadOnly = true;
+            this.XmlTB.Size = new System.Drawing.Size(301, 162);
+            this.XmlTB.TabIndex = 8;
+            this.XmlTB.Text = "";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(2, 11);
+            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(35, 13);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "image";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(2, 155);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(24, 13);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "text";
+            // 
+            // pictureBox
+            // 
+            this.pictureBox.Location = new System.Drawing.Point(2, 26);
+            this.pictureBox.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(123, 127);
+            this.pictureBox.TabIndex = 5;
+            this.pictureBox.TabStop = false;
             // 
             // OpenFileBtn
             // 
-            this.OpenFileBtn.Location = new System.Drawing.Point(168, 414);
+            this.OpenFileBtn.Location = new System.Drawing.Point(126, 336);
+            this.OpenFileBtn.Margin = new System.Windows.Forms.Padding(2);
             this.OpenFileBtn.Name = "OpenFileBtn";
-            this.OpenFileBtn.Size = new System.Drawing.Size(75, 34);
+            this.OpenFileBtn.Size = new System.Drawing.Size(56, 28);
             this.OpenFileBtn.TabIndex = 4;
             this.OpenFileBtn.Text = "Open file";
             this.OpenFileBtn.UseVisualStyleBackColor = true;
@@ -212,55 +282,42 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(181, 7);
+            this.label8.Location = new System.Drawing.Point(136, 6);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(33, 16);
+            this.label8.Size = new System.Drawing.Size(29, 13);
             this.label8.TabIndex = 3;
             this.label8.Text = "XML";
             // 
-            // pictureBox
+            // label11
             // 
-            this.pictureBox.Location = new System.Drawing.Point(3, 32);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(164, 156);
-            this.pictureBox.TabIndex = 5;
-            this.pictureBox.TabStop = false;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(14, 140);
+            this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(53, 13);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "STATUS:";
             // 
-            // label9
+            // StatusLabel
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 191);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(27, 16);
-            this.label9.TabIndex = 6;
-            this.label9.Text = "text";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 13);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(45, 16);
-            this.label10.TabIndex = 7;
-            this.label10.Text = "image";
-            // 
-            // XmlTB
-            // 
-            this.XmlTB.Location = new System.Drawing.Point(6, 210);
-            this.XmlTB.Name = "XmlTB";
-            this.XmlTB.ReadOnly = true;
-            this.XmlTB.Size = new System.Drawing.Size(400, 198);
-            this.XmlTB.TabIndex = 8;
-            this.XmlTB.Text = "";
+            this.StatusLabel.AutoSize = true;
+            this.StatusLabel.Location = new System.Drawing.Point(66, 140);
+            this.StatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(27, 13);
+            this.StatusLabel.TabIndex = 12;
+            this.StatusLabel.Text = "N/A";
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(667, 475);
+            this.ClientSize = new System.Drawing.Size(500, 386);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "Server";
             this.panel1.ResumeLayout(false);
@@ -277,19 +334,17 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox2;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button DisconnectBtn;
         private System.Windows.Forms.Button ConnectBtn;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label ClientPortLabel;
+        private System.Windows.Forms.Label ClientIpLabel;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openXmlFileDialog;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button OpenFileBtn;
@@ -297,5 +352,10 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.RichTextBox XmlTB;
+        private System.Windows.Forms.CheckBox LocalhostCB;
+        private System.Windows.Forms.TextBox PortTB;
+        private System.Windows.Forms.TextBox IpTB;
+        private System.Windows.Forms.Label StatusLabel;
+        private System.Windows.Forms.Label label11;
     }
 }
